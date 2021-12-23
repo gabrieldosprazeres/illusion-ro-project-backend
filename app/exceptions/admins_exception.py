@@ -78,3 +78,15 @@ class InvalidKeyAdminError(Exception):
                     ]
                 }
         super().__init__(self.message)
+
+
+class EmailNotFound(Exception):
+
+
+    def __init__(self, email) -> None:
+
+        self.message = {
+            'message': f"email: '{email}' not found"
+        }
+
+        super().__init__(self.message)
