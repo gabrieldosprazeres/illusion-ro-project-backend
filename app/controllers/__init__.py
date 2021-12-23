@@ -1,5 +1,6 @@
 from app.exceptions.leads_exception import InvalidKeyLeadError, PatternPhoneError, InvalidTypeLeadError, PhoneAlreadyExistsError
-from app.exceptions.admins_exception import InvalidKeyAdminError, InvalidTypeAdminError
+from app.exceptions.login_exception import InvalidKeyLoginError, AdminNotFoundError, IncorrectPasswordError, InvalidTypeLoginError
+from app.exceptions.admins_exception import EmailNotFound, InvalidKeyAdminError, InvalidTypeAdminError
 from app.exceptions import EmailAlreadyExistsError, UsernameAlreadyExistsError, PatternEmailError
 from re import fullmatch, compile
 
@@ -74,3 +75,44 @@ def check_type_for_admin(data: dict):
     for value in data.values():
         if type(value) != str:
             raise InvalidTypeAdminError(**data)
+
+
+def check_key_for_login(data: dict):
+    
+    keys = ['username', 'password']
+    
+    for key in data.keys():
+        if not key in keys or len(data) < 2:
+            raise InvalidKeyLoginError(**data)
+
+
+def check_type_for_login(data: dict):
+    
+    for value in data.values():
+        if type(value) != str:
+            raise InvalidTypeLoginError(**data)
+
+
+def check_username_and_password(data: dict, model):
+    admin = model.query.filter_by(username=data.get('username')).first()
+
+    if not admin:
+        raise AdminNotFoundError(data.get('username'))
+
+    if not admin.check_password(data.get('password')):
+        raise IncorrectPasswordError()
+
+    return admin
+
+
+def check_email_lead(email: str, model):
+    
+    email_formatted = f'%{email}%'
+    
+    lead = model.query.filter(model.email.ilike(email_formatted)).all()
+
+    if not lead:
+        raise EmailNotFound(email)
+
+    return lead
+

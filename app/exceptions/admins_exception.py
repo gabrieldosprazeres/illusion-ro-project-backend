@@ -10,9 +10,9 @@ class InvalidTypeAdminError(Exception):
     }
     
     
-    def __init__(self, name: str, last_name: str, email: str, username: str) -> None:
+    def __init__(self, name: str, last_name: str, email: str, username: str, password: str) -> None:
 
-        keys = [name, last_name, email, username]
+        keys = [name, last_name, email, username, password]
         for key in keys:
             if type(key) != str:
                 if key == name:
@@ -51,6 +51,15 @@ class InvalidTypeAdminError(Exception):
                             'username': f'{self.types[type(username)]}'
                         }
                     }
+                elif key == password:
+                    self.message = {
+                        'available field': {
+                            'password': 'string'
+                        },
+                        'field sent': {
+                            'password': f'{self.types[type(password)]}'
+                        }
+                    }
 
         super().__init__(self.message)
 
@@ -68,4 +77,16 @@ class InvalidKeyAdminError(Exception):
                     'password'
                     ]
                 }
+        super().__init__(self.message)
+
+
+class EmailNotFound(Exception):
+
+
+    def __init__(self, email) -> None:
+
+        self.message = {
+            'message': f"email: '{email}' not found"
+        }
+
         super().__init__(self.message)

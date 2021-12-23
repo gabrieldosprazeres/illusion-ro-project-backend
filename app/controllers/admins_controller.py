@@ -1,8 +1,20 @@
 from flask import request, jsonify, current_app
-from app.controllers import check_email, check_key_for_admin, check_pattern, check_type_for_admin, check_username
-from app.exceptions.admins_exception import InvalidKeyAdminError, InvalidTypeAdminError
+from app.controllers import check_email, check_key_for_admin, check_pattern, check_type_for_admin, check_username, check_email_lead
+from app.exceptions.admins_exception import InvalidKeyAdminError, InvalidTypeAdminError, EmailNotFound
 from app.exceptions import EmailAlreadyExistsError, UsernameAlreadyExistsError, PatternEmailError
 from app.models.admins_model import AdminsModel
+from app.models.leads_model import LeadsModel
+
+
+def get_lead_by_email(email: str):
+    
+    try:
+        lead = check_email_lead(email, LeadsModel)
+
+    except EmailNotFound as error:
+        return jsonify(error.message), 404
+
+    return jsonify(lead), 200
 
 
 def create_admin():
