@@ -1,6 +1,6 @@
 from app.exceptions.leads_exception import InvalidKeyLeadError, PatternPhoneError, InvalidTypeLeadError, PhoneAlreadyExistsError
 from app.exceptions.admins_exception import InvalidKeyAdminError, InvalidTypeAdminError
-from app.exceptions.login_exception import InvalidKeyLoginError, AdminNotFoundError, IncorrectPasswordError
+from app.exceptions.login_exception import InvalidKeyLoginError, AdminNotFoundError, IncorrectPasswordError, InvalidTypeLoginError
 from app.exceptions import EmailAlreadyExistsError, UsernameAlreadyExistsError, PatternEmailError
 from re import fullmatch, compile
 
@@ -84,6 +84,13 @@ def check_key_for_login(data: dict):
     for key in data.keys():
         if not key in keys or len(data) < 2:
             raise InvalidKeyLoginError(**data)
+
+
+def check_type_for_login(data: dict):
+    
+    for value in data.values():
+        if type(value) != str:
+            raise InvalidTypeLoginError(**data)
 
 
 def check_username_and_password(data: dict, model):
