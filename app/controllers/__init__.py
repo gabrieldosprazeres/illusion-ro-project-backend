@@ -1,5 +1,5 @@
 from app.exceptions.leads_exception import InvalidKeyLeadError, PatternPhoneError, InvalidTypeLeadError, PhoneAlreadyExistsError
-from app.exceptions.admins_exception import InvalidKeyAdminError, InvalidTypeAdminError
+from app.exceptions.admins_exception import EmailNotFound, InvalidKeyAdminError, InvalidTypeAdminError
 from app.exceptions.login_exception import InvalidKeyLoginError, AdminNotFoundError, IncorrectPasswordError
 from app.exceptions import EmailAlreadyExistsError, UsernameAlreadyExistsError, PatternEmailError
 from re import fullmatch, compile
@@ -94,6 +94,18 @@ def check_username_and_password(data: dict, model):
 
     if not admin.check_password(data.get('password')):
         raise IncorrectPasswordError()
-    
+
     return admin
+
+
+def check_email_lead(email: str, model):
+    
+    email_formatted = f'%{email}%'
+    
+    lead = model.query.filter(model.email.ilike(email_formatted)).all()
+
+    if not lead:
+        raise EmailNotFound(email)
+
+    return lead
 
