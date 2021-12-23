@@ -1,6 +1,7 @@
 from flask import request, jsonify, current_app
-from app.controllers import check_email, check_key, check_pattern, check_phone, check_type, check_username
-from app.exceptions.leads_exception import EmailAlreadyExistsError, InvalidKeyError, InvalidTypeError, PatternEmailError, PatternPhoneError, PhoneAlreadyExistsError, UsernameAlreadyExistsError
+from app.controllers import check_email, check_key_for_lead, check_pattern, check_phone, check_type_for_lead, check_username
+from app.exceptions.leads_exception import InvalidKeyLeadError, InvalidTypeLeadError, PatternPhoneError, PhoneAlreadyExistsError
+from app.exceptions import EmailAlreadyExistsError, UsernameAlreadyExistsError, PatternEmailError
 from app.models.leads_model import LeadsModel
 
 
@@ -23,11 +24,11 @@ def create_lead():
     data: dict = request.get_json()
 
     try:
-        check_key(data)
-        check_type(data)
-        check_email(data)
-        check_phone(data)
-        check_username(data)
+        check_key_for_lead(data)
+        check_type_for_lead(data)
+        check_email(data, LeadsModel)
+        check_phone(data, LeadsModel)
+        check_username(data, LeadsModel)
         check_pattern(data)
 
         lead = LeadsModel(**data)
@@ -43,10 +44,10 @@ def create_lead():
         return jsonify(error.message), 409
 
     except (
-        InvalidTypeError, 
+        InvalidTypeLeadError, 
         PatternPhoneError, 
         PatternEmailError, 
-        InvalidKeyError
+        InvalidKeyLeadError
         ) as error:
         return jsonify(error.message), 400
 

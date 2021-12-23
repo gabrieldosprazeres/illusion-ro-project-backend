@@ -1,16 +1,4 @@
-class PhoneAlreadyExistsError(Exception):
-
-
-    def __init__(self, phone) -> None:
-
-        self.message = {
-            'message': f"phone: '{phone}' already exists"
-        }
-
-        super().__init__(self.message)
-
-
-class InvalidTypeLeadError(Exception):
+class InvalidTypeAdminError(Exception):
 
     types = {
         str: 'string',
@@ -22,9 +10,9 @@ class InvalidTypeLeadError(Exception):
     }
     
     
-    def __init__(self, name: str, last_name: str, email: str, phone: str, username: str) -> None:
+    def __init__(self, name: str, last_name: str, email: str, username: str) -> None:
 
-        keys = [name, last_name, email, phone, username]
+        keys = [name, last_name, email, username]
         for key in keys:
             if type(key) != str:
                 if key == name:
@@ -54,15 +42,6 @@ class InvalidTypeLeadError(Exception):
                             'email': f'{self.types[type(email)]}'
                         }
                     }
-                elif key == phone:
-                    self.message = {
-                        'available field': {
-                            'phone': 'string'
-                        },
-                        'field sent': {
-                            'phone': f'{self.types[type(phone)]}'
-                        }
-                    }
                 elif key == username:
                     self.message = {
                         'available field': {
@@ -76,29 +55,17 @@ class InvalidTypeLeadError(Exception):
         super().__init__(self.message)
 
 
-class PatternPhoneError(Exception):
-    def __init__(self, data: dict):
-        self.message = {
-            'field sent': {
-                'phone': f"{data.get('phone')}",
-                'message': 'default for phone (xx) xxxxx-xxxx'
-            }
-        }
-
-        super().__init__(self.message)
-
-
-class InvalidKeyLeadError(Exception):
+class InvalidKeyAdminError(Exception):
     def __init__(self, **kwargs):
         for key in kwargs.keys():
-            if key != 'name' or key != 'last_name' or key != 'email' or key != 'phone' or key != 'username':
+            if key != 'name' or key != 'last_name' or key != 'email' or key != 'username' or key != 'password':
                 self.message = {
                     'available_keys': [
                     'name',
                     'last_name',
                     'email',
-                    'phone',
-                    'username'
+                    'username',
+                    'password'
                     ]
                 }
         super().__init__(self.message)
