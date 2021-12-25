@@ -1,4 +1,4 @@
-from app.exceptions.leads_exception import InvalidKeyLeadError, PatternPhoneError, InvalidTypeLeadError, PhoneAlreadyExistsError
+from app.exceptions.leads_exception import IdNotFoundError, InvalidKeyLeadError, PatternPhoneError, InvalidTypeLeadError, PhoneAlreadyExistsError
 from app.exceptions.login_exception import InvalidKeyLoginError, AdminNotFoundError, IncorrectPasswordError, InvalidTypeLoginError
 from app.exceptions.admins_exception import EmailNotFound, InvalidKeyAdminError, InvalidTypeAdminError
 from app.exceptions import EmailAlreadyExistsError, UsernameAlreadyExistsError, PatternEmailError
@@ -116,3 +116,10 @@ def check_email_lead(email: str, model):
 
     return lead
 
+
+def check_id(id_to_check, model):
+
+    id = model.query.get(id_to_check)
+    
+    if not id:
+        raise IdNotFoundError
