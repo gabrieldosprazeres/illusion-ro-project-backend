@@ -65,7 +65,7 @@ $ flask run
 
 ## Documentação das rotas e retornos
 
-Você poderá acessar a documentação das rotas em breve..
+Você poderá acessar a documentação das rotas em breve, pois a documentaçãp está em construção..
 
 #
 
