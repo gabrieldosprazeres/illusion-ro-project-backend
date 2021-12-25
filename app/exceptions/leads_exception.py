@@ -102,3 +102,14 @@ class InvalidKeyLeadError(Exception):
                     ]
                 }
         super().__init__(self.message)
+
+
+class IdNotFoundError(Exception):
+
+
+    def __init__(self) -> None:
+        self.message = {
+            'message': 'Id not found'
+        }
+        super().__init__(self.message)
+
