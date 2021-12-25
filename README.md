@@ -65,7 +65,7 @@ $ flask run
 
 ## Documentação das rotas e retornos
 
-Você poderá acessar a documentação das rotas em breve, pois a documentaçãp está em construção..
+Você pode acessar a documentação das rotas clicando em [Doc API](https://documenter.getpostman.com/view/18794559/UVREj4kf)
 
 #
 
