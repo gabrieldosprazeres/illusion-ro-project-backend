@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('name', sa.VARCHAR(length=50), nullable=False),
     sa.Column('last_name', sa.VARCHAR(length=50), nullable=False),
     sa.Column('email', sa.VARCHAR(length=100), nullable=False),
-    sa.Column('phone', sa.VARCHAR(length=15), nullable=False),
+    sa.Column('phone', sa.VARCHAR(length=14), nullable=False),
     sa.Column('username', sa.VARCHAR(length=23), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),

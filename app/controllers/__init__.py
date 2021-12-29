@@ -45,7 +45,7 @@ def check_type_for_lead(data: dict):
 
 
 def check_pattern(data: dict):
-    pattern_phone = "(\(\d{2}\))(\s)(\d{5}\-\d{4})"
+    pattern_phone = "(\(\d{2}\))(\d{5}\-\d{4})"
     pattern_email = compile("([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\[[\t -Z^-~]*])")
         
     email = fullmatch(pattern_email, data.get('email'))

@@ -21,6 +21,6 @@ class LeadsModel(db.Model):
     name = Column(VARCHAR(50), nullable=False)
     last_name = Column(VARCHAR(50), nullable=False)
     email = Column(VARCHAR(100), unique=True, nullable=False)
-    phone = Column(VARCHAR(15), unique=True, nullable=False)
+    phone = Column(VARCHAR(14), unique=True, nullable=False)
     username = Column(VARCHAR(23), unique=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow())

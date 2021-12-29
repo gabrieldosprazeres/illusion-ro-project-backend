@@ -81,7 +81,7 @@ class PatternPhoneError(Exception):
         self.message = {
             'field sent': {
                 'phone': f"{data.get('phone')}",
-                'message': 'default for phone (xx) xxxxx-xxxx'
+                'message': 'default for phone (xx)xxxxx-xxxx'
             }
         }
 
