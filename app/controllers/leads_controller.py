@@ -20,6 +20,13 @@ def get_leads():
     return jsonify(current_page), 200
 
 
+def get_leads_all():
+    
+    leads = LeadsModel.query.order_by(LeadsModel.id).all()
+    
+    return jsonify(len(leads)), 200
+
+
 def create_lead():
     data: dict = request.get_json()
 
